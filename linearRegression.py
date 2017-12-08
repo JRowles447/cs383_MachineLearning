@@ -42,13 +42,6 @@ class LinearRegression:
             We will be making use of get_params and set_params to check for correctness
         """
         if self.flag == 'GradientDescent':
-            print("X is: ")
-            print(X)
-            print("Y is: ")
-            print(Y)
-            print("w is: ")
-            print(self.w)
-
             step = 0.001
             for t in range(epochs):
                 # WRITE the required CODE HERE to update the parameters using gradient descent
@@ -65,8 +58,8 @@ class LinearRegression:
 
 
                 self.w = new_w
-                print("new w is: " + str(self.w))
-                print("loss is: " + str(loss))
+                # print("new w is: " + str(self.w))
+                # print("loss is: " + str(loss))
                 # make use of self.loss_grad() function
                 if t%100 == 0:
                     print("Epoch: {} :: loss: {}".format(t, self.loss(self.w, X, y)))
@@ -79,7 +72,7 @@ class LinearRegression:
             # print(y)
             # print("**************************************************************")
             L2_pseudo = np.dot(X.T, X) + 2 * self.alpha * np.eye(X.shape[1])
-            second = np.dot(L2_pseudo, w)[0] - np.dot(X.T, y)
+            second = np.dot(L2_pseudo, self.w)[0] - np.dot(X.T, y)
             # print(w)
 
             # bottom line
@@ -102,8 +95,16 @@ class LinearRegression:
 
         Return your predictions
         """
-        # WRITE the required CODE HERE and return the computed values
-        return 0
+        # WRITE the required CODE HERE and return the computed
+        y = np.ones(X.shape[0])
+        print(self.w)
+        print(self.w.T)
+        print(X)
+
+        # this is not what IAN said online he said (w.T, X)
+        y = np.dot(self.w, X.T)
+
+        return y
 
     def loss(self, w, X, Y):
         """
