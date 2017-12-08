@@ -42,9 +42,19 @@ class LinearRegression:
             We will be making use of get_params and set_params to check for correctness
         """
         if self.flag == 'GradientDescent':
+            print("X is: ")
+            print(X)
+            print("Y is: ")
+            print(Y)
+            print("w is: ")
+            print(self.w)
+
             step = 0.001
             for t in range(epochs):
                 # WRITE the required CODE HERE to update the parameters using gradient descent
+                res = self.loss_grad(self.w, X, y)
+                print(res)
+                self.set_params(res)
                 # make use of self.loss_grad() function
                 if t%100 == 0:
                     print("Epoch: {} :: loss: {}".format(t, self.loss(self.w, X, y)))
@@ -77,6 +87,15 @@ class LinearRegression:
         Compute the loss loss. (Function will be tested only for gradient descent)
         """
         # WRITE the required CODE HERE and return the computed values
+        sum = 0
+        row_number = 0
+
+        # get L2 Norm
+
+
+        # iterate over the number of rows
+        # while (row_number < X.shape[0]):
+        #     sum += ((np.dot(w.T, X[row_number,]) - Y[row_number])**2 + self.alpha*())
         return 0
 
     def loss_grad(self, w, X, y):
@@ -88,8 +107,28 @@ class LinearRegression:
 
         Compute the gradient of the loss. (Function will be tested only for gradient descent)
         """
+
         # WRITE the required CODE HERE and return the computed values
-        return 0
+        #using the top gradient
+        print(w)
+        print(X)
+        print(y)
+        print("**************************************************************")
+        L2_pseudo = np.dot(X.T, X) + 2 * self.alpha*np.eye(X.shape[1])
+        second = np.dot(L2_pseudo, w)[0] - np.dot(X.T, y)
+        # print(w)
+
+        #bottom line
+        third = np.linalg.inv(L2_pseudo).dot(X.T).dot(y)
+
+
+
+        # print("L2_pseudo is: ")
+        # print(L2_pseudo)
+        # print("second is: ")
+        # print(second)
+
+        return third
 
     def get_params(self):
         """
@@ -114,6 +153,11 @@ if __name__ == '__main__':
     # Get data
     data = Data()
     X, y = data.get_linear_regression_data()
+
+    #ADDED BY ME
+    print(X)
+    print(y)
+    #llaelif
 
     # Linear regression with gradient descent
     model = LinearRegression(flag='GradientDescent')
