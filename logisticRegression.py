@@ -71,11 +71,10 @@ class LogisticRegression:
             # WRITE the required CODE HERE to update the parameters using gradient descent
             # make use of self.loss_grad() function
 
-            res = self.loss_grad(self.w, X, y)
-            loss = self.loss(self.w, X, y)
+            res = self.loss_grad(self.w, X, Y)
+            loss = self.loss(self.w, X, Y)
 
-            new_w = self.w + step * res
-            self.w = new_w
+            self.w = self.w + step * res
 
             if t % 100 == 0:
                 plot_boundary(self.w)
@@ -105,10 +104,10 @@ class LogisticRegression:
 
         # calculate the loss
         for x in range(X.shape[0]):
-            z = np.dot(X, w.T)
+            z = np.dot(X[x,], w.T)
             sigmoid = (1)/(1+ np.e**(-z))
             # print(z)
-            loss += -y[x]*np.log10(sigmoid) - (1-y[x])*np.log(1-sigmoid)
+            loss += -y[x]*np.log10(sigmoid) - (1-y[x])*np.log10(1-sigmoid)
 
         loss = (1/N) * loss
 
