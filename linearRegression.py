@@ -48,7 +48,6 @@ class LinearRegression:
                 # do regular gradient descent here from line 1 in slide 27
                 res = self.loss_grad(self.w, X, y)
                 loss = self.loss(self.w, X, y)
-                # print("sum for gradient is: " + str(res))
 
                 #converges using step
                 new_w = self.w + step * res
@@ -58,8 +57,8 @@ class LinearRegression:
 
 
                 self.w = new_w
-                # print("new w is: " + str(self.w))
-                # print("loss is: " + str(loss))
+
+
                 # make use of self.loss_grad() function
                 if t%100 == 0:
                     print("Epoch: {} :: loss: {}".format(t, self.loss(self.w, X, y)))
@@ -67,23 +66,16 @@ class LinearRegression:
         elif self.flag == 'Analytic':
             pass
 
-            # print(w)
-            # print(X)
-            # print(y)
-            # print("**************************************************************")
             L2_pseudo = np.dot(X.T, X) + 2 * self.alpha * np.eye(X.shape[1])
-            second = np.dot(L2_pseudo, self.w)[0] - np.dot(X.T, y)
-            # print(w)
-
-            # bottom line
             third = np.linalg.inv(L2_pseudo).dot(X.T).dot(y)
 
 
 
-            #do closed form from line 2 slide 27
+            # do closed form from line 2 slide 27
             # Remember: matrix inverse in NOT equal to matrix**(-1)
             # WRITE the required CODE HERE to update the weights using closed form solution
             self.w = third
+            print(third)
 
         else:
             raise ValueError('flag can only be either: ''GradientDescent'' or ''Analytic''')
@@ -140,12 +132,11 @@ class LinearRegression:
         """
 
         # WRITE the required CODE HERE and return the computed values
-        #using the top gradient
+        # using the top gradient
         gradient = 0
 
         for x in range(X.shape[0]):
             gradient += (y[x]-np.dot(w.T, X[x]))* X[x]
-
         return gradient
 
     def get_params(self):
@@ -171,11 +162,6 @@ if __name__ == '__main__':
     # Get data
     data = Data()
     X, y = data.get_linear_regression_data()
-
-    #ADDED BY ME
-    print(X)
-    print(y)
-    #llaelif
 
     # Linear regression with gradient descent
     model = LinearRegression(flag='GradientDescent')
