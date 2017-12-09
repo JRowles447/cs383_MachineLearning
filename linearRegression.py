@@ -89,9 +89,6 @@ class LinearRegression:
         """
         # WRITE the required CODE HERE and return the computed
         y = np.ones(X.shape[0])
-        print(self.w)
-        print(self.w.T)
-        print(X)
 
         # this is not what IAN said online he said (w.T, X)
         y = np.dot(self.w, X.T)

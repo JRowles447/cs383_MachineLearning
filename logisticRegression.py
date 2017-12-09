@@ -64,9 +64,19 @@ class LogisticRegression:
             We will be making use of get_params and set_params to check for correctness
         """
         step = 0.0001 # set the value for step parameter
+
+        print(X)
+        print(Y)
         for t in range(epochs):
             # WRITE the required CODE HERE to update the parameters using gradient descent
             # make use of self.loss_grad() function
+
+            res = self.loss_grad(self.w, X, y)
+            loss = self.loss(self.w, X, y)
+
+            new_w = self.w + step * res
+            self.w = new_w
+
             if t % 100 == 0:
                 plot_boundary(self.w)
 
@@ -76,9 +86,12 @@ class LogisticRegression:
         :param X: inputs, shape:(N,3)
         :return: predictions, shape:(N,)
         """
+        y = np.ones(X.shape[0])
 
-        # WRITE the required CODE HERE and return the computed values
-        return 0
+        # this is not what IAN said online he said (w.T, X)
+        y = np.dot(self.w, X.T)
+
+        return y
 
     def loss(self, w, X, Y):
         """
@@ -87,9 +100,19 @@ class LogisticRegression:
         :param Y: target, shape:(N,)
         :return: scalar loss value
         """
+        N = y[0]
+        loss = 0
 
-        # WRITE the required CODE HERE and return the computed values
-        return 0
+        # calculate the loss
+        for x in range(X.shape[0]):
+            z = np.dot(X, w.T)
+            sigmoid = (1)/(1+ np.e**(-z))
+            # print(z)
+            loss += -y[x]*np.log10(sigmoid) - (1-y[x])*np.log(1-sigmoid)
+
+        loss = (1/N) * loss
+
+        return loss
 
     def loss_grad(self, w, X, y):
         """
@@ -101,7 +124,12 @@ class LogisticRegression:
         :return: vector of size (3,) containing gradients for each weight
         """
         # WRITE the required CODE HERE and return the computed values
-        return 0
+
+        gradient = 0
+        #calculate the gradient loss
+        for x in range(X.shape[0]):
+            gradient += (y[x]-np.dot(w.T, X[x]))*X[x]
+        return gradient
 
     def get_params(self):
         """
