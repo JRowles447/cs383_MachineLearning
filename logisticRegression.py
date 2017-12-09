@@ -65,8 +65,6 @@ class LogisticRegression:
         """
         step = 0.0001 # set the value for step parameter
 
-        print(X)
-        print(Y)
         for t in range(epochs):
             # WRITE the required CODE HERE to update the parameters using gradient descent
             # make use of self.loss_grad() function
@@ -104,9 +102,9 @@ class LogisticRegression:
 
         # calculate the loss
         for x in range(X.shape[0]):
-            z = np.dot(X[x,], w.T)
+            z = np.dot(w.T, X[x,])
             sigmoid = (1)/(1+ np.e**(-z))
-            # print(z)
+            print(sigmoid)
             loss += -y[x]*np.log10(sigmoid) - (1-y[x])*np.log10(1-sigmoid)
 
         loss = (1/N) * loss
@@ -125,10 +123,18 @@ class LogisticRegression:
         # WRITE the required CODE HERE and return the computed values
 
         gradient = 0
+
+        Z = np.dot(X, w.T)
+        # print(np.e**(-Z))
+
+        sigmoid = 1/(1+np.e**(-Z))
+        diff = sigmoid - y
+        res = np.dot(diff.T, X)
+        return res
         #calculate the gradient loss
-        for x in range(X.shape[0]):
-            gradient += (y[x]-np.dot(w.T, X[x]))*X[x]
-        return gradient
+        # for x in range(X.shape[0]):
+        #     gradient += (y[x]-np.dot(w.T, X[x]))*X[x]
+        # return gradient
 
     def get_params(self):
         """
