@@ -39,7 +39,6 @@ class kmeans():
     def __init__(self, K):
         self.K = K      # Set the number of clusters
 
-        np.random.seed(1234)
         self.centroids = np.random.rand(K, 2) # Initialize the position for those cluster centroids
 
         # Plot initial centroids with 'o'
@@ -54,7 +53,9 @@ class kmeans():
         self.C = -np.ones(np.shape(X)[0],dtype=int) # Initializing which center does each sample belong to
 
         # WRITE the required CODE for learning HERE
-
+        for x in range(iterations):
+            self.C = self.assign_clusters(X, self.C, self.centroids)
+            self.centroids = self.update_centroids(X, self.C, self.centroids)
         return 0
 
     def update_centroids(self, X, C, centroids):
@@ -67,8 +68,23 @@ class kmeans():
         Recompute centroids
         """
         # WRITE the required CODE HERE and return the computed values
+        new_centroids = np.zeros((K, 2))
+        for c in range(centroids.shape[0]):
+            sum = 0
+            #count the vertices with matching centroid
+            verts = 0
+            for x in range(X.shape[0]):
+                # centroid is assigned to the point
+                if(c == C[x]):
+                    sum += X[x]
+                    verts += 1
+            if(verts != 0):
+                new_centroids[c] = (sum/verts)
+            else:
+                new_centroids[c] = centroids[c]
 
-        return np.zeros((K, 2))
+
+        return new_centroids
 
     def assign_clusters(self, X, C, centroids):
         """
@@ -80,8 +96,18 @@ class kmeans():
         Assign data points to clusters
         """
         # WRITE the required CODE HERE and return the computed values
+        new_C = C
+        for x in range(X.shape[0]):
+            smallest = 0
 
-        return 0
+            for c in range(centroids.shape[0]):
+                old_dist = np.sqrt((centroids[smallest][0] - X[x][0])**2 + (centroids[smallest][1]-X[x][1])**2)
+                new_dist = np.sqrt((centroids[c][0] - X[x][0])**2 + (centroids[c][1]-X[x][1])**2)
+                if (new_dist <= old_dist):
+                    smallest = c
+            new_C[x] = smallest
+
+        return new_C
 
     def get_clusters(self):
         """

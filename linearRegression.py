@@ -50,7 +50,7 @@ class LinearRegression:
                 loss = self.loss(self.w, X, y)
 
                 # converges using step
-                self.w = self.w + step * res
+                self.w = self.w + (step * res)
 
                 # diverges using alpha
                 # new_w = self.w + self.alpha * res
@@ -60,8 +60,7 @@ class LinearRegression:
                     print("Epoch: {} :: loss: {}".format(t, self.loss(self.w, X, y)))
 
         elif self.flag == 'Analytic':
-            step = 0.001
-            L2_pseudo = np.dot(X.T, X) + 2 * step * np.eye(X.shape[1])
+            L2_pseudo = np.dot(X.T, X) + 2 * self.alpha * np.eye(X.shape[1])
             third = np.linalg.inv(L2_pseudo).dot(X.T).dot(y)
 
 
