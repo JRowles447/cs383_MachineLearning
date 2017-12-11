@@ -52,16 +52,30 @@ class Posterior:
         lime_probs = [0, .25, .50, .75, 1.0]
         hypo_probs = [.1, .2, .4, .2, .1]
 
-        # iterate over all the hypotheses
-        for i in range(5):
-            sum = lime_probs[i]*hypo_probs[i]
-            # iterate over all the samples
-            for j in range(self.N):
+        lime_list = np.zeros(self.N)
 
+        for lime in range(self.limes.shape[0]):
+            # iterate over all the hypotheses
+            sum_lime = 0
+            sum_cherry = 0
+            for i in range(5):
+                local_sum_lime = lime_probs[i]*hypo_probs[i]
+                local_sum_cherry = (1-lime_probs[i]*hypo_probs[i])
+                # iterate over all the samples
+                product = 1
+                for j in range(self.N):
+                    if (j < self.limes[lime]):
+                        # print(str(j) + " is less than " + str(lime) )
+                        product = product * lime_probs[i]
+                    else:
+                        product = product * (1- lime_probs[i])
+                sum_lime += local_sum_lime * product
+                sum_cherry += local_sum_cherry * product
+            final_sum = (sum_lime/(sum_lime+sum_cherry))
+            lime_list[lime] = final_sum
 
-
-
-        return np.zeros(self.N)
+            print(lime_list[lime])
+        return lime_list
 
     def get_finite(self):
         """

@@ -96,7 +96,7 @@ class kmeans():
         Assign data points to clusters
         """
         # WRITE the required CODE HERE and return the computed values
-        
+
         new_C = C
         # iterate over the vertices
         for x in range(X.shape[0]):
@@ -114,7 +114,7 @@ class kmeans():
     def get_clusters(self):
         """
         *********** DO NOT EDIT *******
-        :return: assigned clusters and centroid locaitons, shape: (N,), shape: (K,2)
+        :return: assigned clusters and centroid locatons, shape: (N,), shape: (K,2)
         """
         return self.C, self.centroids
 

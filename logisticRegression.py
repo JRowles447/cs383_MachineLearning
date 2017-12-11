@@ -104,7 +104,7 @@ class LogisticRegression:
         for x in range(X.shape[0]):
             z = np.dot(w.T, X[x,])
             sigmoid = (1)/(1+ np.e**(-z))
-            print(sigmoid)
+            # print(sigmoid)
             loss += -y[x]*np.log10(sigmoid) - (1-y[x])*np.log10(1-sigmoid)
 
         loss = (1/N) * loss
@@ -124,17 +124,14 @@ class LogisticRegression:
 
         gradient = 0
 
-        Z = np.dot(X, w.T)
+        Z = np.dot(w, X.T)
         # print(np.e**(-Z))
 
-        sigmoid = 1/(1+np.e**(-Z))
+        sigmoid = 1/(1+(np.e)**(-1*Z))
         diff = sigmoid - y
         res = np.dot(diff.T, X)
         return res
-        #calculate the gradient loss
-        # for x in range(X.shape[0]):
-        #     gradient += (y[x]-np.dot(w.T, X[x]))*X[x]
-        # return gradient
+
 
     def get_params(self):
         """
