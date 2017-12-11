@@ -170,3 +170,9 @@ if __name__ == '__main__':
     # plt.axis([-10, 10, -10, 10])
     plt.savefig('figures/Q2.png')
     plt.close()
+
+    training_model = LogisticRegression()
+    training_model.fit(X_train, y_train)
+    y_test = model.predict(X_test)
+    model.loss(training_model.get_params(), X_test, y_test)
+
