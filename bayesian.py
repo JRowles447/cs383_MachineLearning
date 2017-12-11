@@ -38,6 +38,28 @@ class Posterior:
         :return: MAP estimates for diff. values of lime; shape:(N,)
         """
         # WRITE the required CODE HERE and return the computed values
+        print(self.a)
+        print()
+        print(self.b)
+        print()
+        print(self.limes)
+        print()
+        print(self.cherries)
+        print()
+        print(self.N)
+        print()
+
+        lime_probs = [0, .25, .50, .75, 1.0]
+        hypo_probs = [.1, .2, .4, .2, .1]
+
+        # iterate over all the hypotheses
+        for i in range(5):
+            sum = lime_probs[i]*hypo_probs[i]
+            # iterate over all the samples
+            for j in range(self.N):
+
+
+
 
         return np.zeros(self.N)
 

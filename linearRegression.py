@@ -47,13 +47,10 @@ class LinearRegression:
                 # WRITE the required CODE HERE to update the parameters using gradient descent
                 # do regular gradient descent here from line 1 in slide 27
                 res = self.loss_grad(self.w, X, y)
-                loss = self.loss(self.w, X, y)
+                # loss = self.loss(self.w, X, y)
 
                 # converges using step
                 self.w = self.w + (step * res)
-
-                # diverges using alpha
-                # new_w = self.w + self.alpha * res
 
                 # make use of self.loss_grad() function
                 if t%100 == 0:
@@ -62,8 +59,6 @@ class LinearRegression:
         elif self.flag == 'Analytic':
             L2_pseudo = np.dot(X.T, X) + 2 * self.alpha * np.eye(X.shape[1])
             third = np.linalg.inv(L2_pseudo).dot(X.T).dot(y)
-
-
 
             # do closed form from line 2 slide 27
             # Remember: matrix inverse in NOT equal to matrix**(-1)

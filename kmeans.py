@@ -96,10 +96,12 @@ class kmeans():
         Assign data points to clusters
         """
         # WRITE the required CODE HERE and return the computed values
+        
         new_C = C
+        # iterate over the vertices
         for x in range(X.shape[0]):
             smallest = 0
-
+            # iterate over each of the centroids, determine which one is closest to the vertex
             for c in range(centroids.shape[0]):
                 old_dist = np.sqrt((centroids[smallest][0] - X[x][0])**2 + (centroids[smallest][1]-X[x][1])**2)
                 new_dist = np.sqrt((centroids[c][0] - X[x][0])**2 + (centroids[c][1]-X[x][1])**2)
