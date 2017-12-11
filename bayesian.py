@@ -50,6 +50,8 @@ class Posterior:
         print()
 
 
+
+        ###
         lime_list  = np.zeros(self.N)
 
         for x in range(self.N):
@@ -71,9 +73,35 @@ class Posterior:
 
         lime_probs = [0, .25, .50, .75, 1.0]
         hypo_probs = [.1, .2, .4, .2, .1]
-        fake = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-        # return fake
-        return np.zeros(self.N)
+
+        lime_list = np.zeros(self.N)
+
+        for lime in range(self.limes.shape[0]):
+            # iterate over all the hypotheses
+            sum_lime = 0
+            sum_cherry = 0
+            for i in range(5):
+                local_sum_lime = lime_probs[i]*hypo_probs[i]
+                local_sum_cherry = (1-lime_probs[i])*hypo_probs[i]
+                # iterate over all the samples
+                product = 1
+                for j in range(lime):
+                    print(lime)
+                    if (j < self.limes[lime]):
+                        product = product * lime_probs[i]
+                    else:
+                        product = product * (1- lime_probs[i])
+                sum_lime += local_sum_lime * product
+                sum_cherry += local_sum_cherry * product
+            final_sum = (sum_lime/(sum_lime+sum_cherry))
+            print("sum of limes is: " + str(sum_lime))
+            print("sum of cherries is: " + str(sum_cherry))
+            print("final sum: " + str(final_sum))
+            print("cherry sum: " + str((sum_cherry)/(sum_lime + sum_cherry)))
+            lime_list[lime] = final_sum
+
+        print(lime_list[lime])
+        return lime_list
 
     def get_infinite(self):
         """
