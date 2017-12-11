@@ -70,9 +70,8 @@ class LogisticRegression:
             # make use of self.loss_grad() function
 
             res = self.loss_grad(self.w, X, Y)
-            loss = self.loss(self.w, X, Y)
 
-            self.w = self.w + step * res
+            self.w = self.w - step * res
 
             if t % 100 == 0:
                 plot_boundary(self.w)
@@ -83,8 +82,6 @@ class LogisticRegression:
         :param X: inputs, shape:(N,3)
         :return: predictions, shape:(N,)
         """
-        y = np.ones(X.shape[0])
-
         # this is not what IAN said online he said (w.T, X)
         y = np.dot(self.w, X.T)
 
@@ -102,13 +99,13 @@ class LogisticRegression:
 
         # calculate the loss
         for x in range(X.shape[0]):
-            z = np.dot(w.T, X[x,])
+            z = np.dot(w, X[x,].T)
             sigmoid = (1)/(1+ np.e**(-z))
             # print(sigmoid)
-            loss += -y[x]*np.log10(sigmoid) - (1-y[x])*np.log10(1-sigmoid)
+            loss += (-y[x]*np.log10(sigmoid) - (1-y[x])*np.log10(1-sigmoid))
 
-        loss = (1/N) * loss
-
+        loss = loss/N
+        print(loss)
         return loss
 
     def loss_grad(self, w, X, y):
@@ -125,11 +122,11 @@ class LogisticRegression:
         gradient = 0
 
         Z = np.dot(w, X.T)
-        # print(np.e**(-Z))
 
-        sigmoid = 1/(1+(np.e)**(-1*Z))
+        sigmoid = 1/(1+np.power((np.e),-Z))
         diff = sigmoid - y
         res = np.dot(diff.T, X)
+        # print(res)
         return res
 
 
@@ -170,5 +167,6 @@ if __name__ == '__main__':
     plt.legend()
     plt.axis('square')
     plt.axis([0, 1, 0, 1])
+    # plt.axis([-10, 10, -10, 10])
     plt.savefig('figures/Q2.png')
     plt.close()

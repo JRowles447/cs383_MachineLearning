@@ -60,18 +60,22 @@ class Posterior:
             sum_cherry = 0
             for i in range(5):
                 local_sum_lime = lime_probs[i]*hypo_probs[i]
-                local_sum_cherry = (1-lime_probs[i]*hypo_probs[i])
+                local_sum_cherry = (1-lime_probs[i])*hypo_probs[i]
                 # iterate over all the samples
                 product = 1
                 for j in range(self.N):
+                    print(lime)
                     if (j < self.limes[lime]):
-                        # print(str(j) + " is less than " + str(lime) )
                         product = product * lime_probs[i]
                     else:
                         product = product * (1- lime_probs[i])
                 sum_lime += local_sum_lime * product
                 sum_cherry += local_sum_cherry * product
             final_sum = (sum_lime/(sum_lime+sum_cherry))
+            print("sum of limes is: " + str(sum_lime))
+            print("sum of cherries is: " + str(sum_cherry))
+            print("final sum: " + str(final_sum))
+            print("cherry sum: " + str((sum_cherry)/(sum_lime + sum_cherry)))
             lime_list[lime] = final_sum
 
             print(lime_list[lime])
@@ -84,7 +88,10 @@ class Posterior:
         """
         # WRITE the required CODE HERE and return the computed values
 
-        return np.zeros(self.N)
+        lime_probs = [0, .25, .50, .75, 1.0]
+        hypo_probs = [.1, .2, .4, .2, .1]
+        fake = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        return fake
 
     def get_infinite(self):
         """
