@@ -159,6 +159,7 @@ if __name__ == '__main__':
     model.fit(X, y)
     y = model.predict(X)
     w_grad = model.get_params()
+    model.loss(model.get_params(), X, y)
 
     # Plot the results
     plt.plot(X[:N // 2, 0], X[:N // 2, 1], 'r+', label='pos')

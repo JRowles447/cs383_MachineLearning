@@ -91,7 +91,8 @@ class Posterior:
         lime_probs = [0, .25, .50, .75, 1.0]
         hypo_probs = [.1, .2, .4, .2, .1]
         fake = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-        return fake
+        # return fake
+        return np.zeros(self.N)
 
     def get_infinite(self):
         """
