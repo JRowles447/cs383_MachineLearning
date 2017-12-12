@@ -62,7 +62,45 @@ class DecisionTree:
         :return: the root node of the decision tree
         """
         # WRITE the required CODE HERE and return the computed values
-        return None
+        print(self.attribute_idxs)
+        print(self.attribute_map)
+
+        # Case 1
+        if(len(examples)==0):
+            return default
+
+        # Case 2
+        num_true = 0
+        num_false = 0
+        for x in examples:
+            if(x[10]):
+                num_true += 1
+            else:
+                num_false += 1
+        if(num_true == len(examples) or num_false == len(examples)):
+            return (num_true > num_false)
+
+        # Case 3
+        if(attribute_names == None or len(attribute_names) == 0):
+            return self.mode(examples)
+
+        # Case 4
+        best = self.chooseAttribute(attribute_names, examples)
+        best_index = self.attribute_idxs[best]
+        tree = Node()
+        # tree = DecisionTree()
+        # tree.root = best
+        for x in self.attribute_map[best]:
+            matching_examples = []
+            for ex in range(len(examples)):
+                if (examples[ex][best_index] == x):
+                    matching_examples.append(examples[ex])
+            print(attribute_names)
+            print(best)
+            subtree = self.DTL(examples, attribute_names.remove(best), self.mode(matching_examples))
+            tree.branches[x] = subtree
+
+        return tree
 
     def mode(self, answers):
         """
@@ -71,7 +109,17 @@ class DecisionTree:
         :return: the mode, i.e., True or False
         """
         # WRITE the required CODE HERE and return the computed values
-        return None
+        num_true = 0
+        num_false = 0
+        for x in range(len(answers)):
+            if(answers[x]):
+                num_true += 1
+            else:
+                num_false += 1
+        if(num_true >= num_false):
+            return True
+        else:
+            return False
 
     def H(self,p):
         """
@@ -80,7 +128,9 @@ class DecisionTree:
         :return: the entropy (float)
         """
         # WRITE the required CODE HERE and return the computed values
-        return None
+        entropy = -p*np.log2(p) - (1-p)*np.log2(1-p)
+
+        return entropy
 
     def ExpectedH(self, attribute_name, examples):
         """
@@ -90,7 +140,25 @@ class DecisionTree:
         :return: the expected entropy (float)
         """
         # WRITE the required CODE HERE and return the computed values
-        return None
+        expected_entropy = 0
+
+        att_index = self.attribute_idxs[attribute_name]
+
+        for val in self.attribute_map[attribute_name]:
+            num_true = 0
+            num_false = 0
+            for ex in examples:
+                # check if the example matches the attribute value
+                if(ex[att_index] == val):
+                    if(ex[10] == True):
+                        num_true += 1
+                    else:
+                        num_false += 1
+            if(num_true == 0 or num_false == 0): # entropy is zero
+                pass
+            else:
+                expected_entropy += ((num_true + num_false)/ len(examples)) * self.H((num_true/num_false))
+        return expected_entropy
 
     def InfoGain(self, attribute_name, examples):
         """
@@ -153,5 +221,4 @@ if __name__ == '__main__':
     model = DecisionTree()
     model.fit(examples, attribute_names, attribute_values)
     y = model.predict(examples)
-    print(y)
-    model.print()
+    # print(y)st()
