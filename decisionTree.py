@@ -95,9 +95,19 @@ class DecisionTree:
             for ex in range(len(examples)):
                 if (examples[ex][best_index] == x):
                     matching_examples.append(examples[ex])
-            print(attribute_names)
+            print("best is: ")
             print(best)
-            subtree = self.DTL(examples, attribute_names.remove(best), self.mode(matching_examples))
+            print("attribute names are: ")
+            print(attribute_names)
+            new_attributes = []
+            if best in attribute_names:
+                new_attributes = attribute_names.remove(best)
+            else:
+                new_attributes = attribute_names
+            print("new attributes are ")
+            print(new_attributes)
+            print(best)
+            subtree = self.DTL(examples, new_attributes, self.mode(matching_examples))
             tree.branches[x] = subtree
 
         return tree
@@ -221,4 +231,6 @@ if __name__ == '__main__':
     model = DecisionTree()
     model.fit(examples, attribute_names, attribute_values)
     y = model.predict(examples)
-    # print(y)st()
+    print()
+    print(model.root)
+    print(y)
