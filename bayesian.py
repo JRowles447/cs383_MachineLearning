@@ -86,18 +86,18 @@ class Posterior:
                 # iterate over all the samples
                 product = 1
                 for j in range(lime):
-                    print(lime)
-                    if (j < self.limes[lime]):
+                    # print(lime)
+                    if (j <= self.limes[lime]):
                         product = product * lime_probs[i]
                     else:
                         product = product * (1- lime_probs[i])
                 sum_lime += local_sum_lime * product
                 sum_cherry += local_sum_cherry * product
             final_sum = (sum_lime/(sum_lime+sum_cherry))
-            print("sum of limes is: " + str(sum_lime))
-            print("sum of cherries is: " + str(sum_cherry))
-            print("final sum: " + str(final_sum))
-            print("cherry sum: " + str((sum_cherry)/(sum_lime + sum_cherry)))
+            # print("sum of limes is: " + str(sum_lime))
+            # print("sum of cherries is: " + str(sum_cherry))
+            # print("final sum: " + str(final_sum))
+            # print("cherry sum: " + str((sum_cherry)/(sum_lime + sum_cherry)))
             lime_list[lime] = final_sum
 
         print(lime_list[lime])
@@ -109,8 +109,16 @@ class Posterior:
         :return: estimates for diff. values of lime; shape:(N,)
         """
         # WRITE the required CODE HERE and return the computed values
+        infinite = np.zeros(self.N)
+        local_b = self.b
+        for x in range(self.N):
+            local_b += 1
+            more_limes = ((gamma(self.a)*gamma(local_b + 1 + x))/gamma(self.a + local_b + 1 + x))
+            more_cherries = ((gamma(self.a + 1)*gamma(local_b + x))/gamma(self.a + local_b + 1 + x))
+            infinite[x] = more_limes/(more_cherries + more_limes)
+        print(infinite)
+        return infinite
 
-        return np.zeros(self.N)
 
 if __name__ == '__main__':
     # Get data
