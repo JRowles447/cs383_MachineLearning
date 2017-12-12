@@ -38,20 +38,6 @@ class Posterior:
         :return: MAP estimates for diff. values of lime; shape:(N,)
         """
         # WRITE the required CODE HERE and return the computed values
-        print(self.a)
-        print()
-        print(self.b)
-        print()
-        print(self.limes)
-        print()
-        print(self.cherries)
-        print()
-        print(self.N)
-        print()
-
-
-
-        ###
         lime_list  = np.zeros(self.N)
 
         for x in range(self.N):
@@ -60,8 +46,6 @@ class Posterior:
             theta = (self.cherries + self.a - 1) / (self.cherries + self.limes[x] + self.a + self.b - 2)
             one_minus_theta = 1 - theta
             lime_list[x] = one_minus_theta
-
-        print(lime_list)
         return lime_list
 
     def get_finite(self):
@@ -86,7 +70,6 @@ class Posterior:
                 # iterate over all the samples
                 product = 1
                 for j in range(lime):
-                    # print(lime)
                     if (j <= self.limes[lime]):
                         product = product * lime_probs[i]
                     else:
@@ -94,13 +77,7 @@ class Posterior:
                 sum_lime += local_sum_lime * product
                 sum_cherry += local_sum_cherry * product
             final_sum = (sum_lime/(sum_lime+sum_cherry))
-            # print("sum of limes is: " + str(sum_lime))
-            # print("sum of cherries is: " + str(sum_cherry))
-            # print("final sum: " + str(final_sum))
-            # print("cherry sum: " + str((sum_cherry)/(sum_lime + sum_cherry)))
             lime_list[lime] = final_sum
-
-        print(lime_list[lime])
         return lime_list
 
     def get_infinite(self):
@@ -116,7 +93,6 @@ class Posterior:
             more_limes = ((gamma(self.a)*gamma(local_b + 1 + x))/gamma(self.a + local_b + 1 + x))
             more_cherries = ((gamma(self.a + 1)*gamma(local_b + x))/gamma(self.a + local_b + 1 + x))
             infinite[x] = more_limes/(more_cherries + more_limes)
-        print(infinite)
         return infinite
 
 
