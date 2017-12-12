@@ -62,12 +62,10 @@ class DecisionTree:
         :return: the root node of the decision tree
         """
         # WRITE the required CODE HERE and return the computed values
-        print(self.attribute_idxs)
-        print(self.attribute_map)
 
         # Case 1
         if(len(examples)==0):
-            return default
+            return Node(answer =default)
 
         # Case 2
         num_true = 0
@@ -78,16 +76,17 @@ class DecisionTree:
             else:
                 num_false += 1
         if(num_true == len(examples) or num_false == len(examples)):
-            return (num_true > num_false)
+            return Node(answer = (num_true > num_false))
 
         # Case 3
         if(attribute_names == None or len(attribute_names) == 0):
-            return self.mode(examples)
+            return Node(answer = self.mode(examples))
 
         # Case 4
         best = self.chooseAttribute(attribute_names, examples)
         best_index = self.attribute_idxs[best]
-        tree = Node()
+        tree = Node(best_index, self.attribute_map[best])
+        self.root = tree
         # tree = DecisionTree()
         # tree.root = best
         for x in self.attribute_map[best]:
@@ -95,18 +94,20 @@ class DecisionTree:
             for ex in range(len(examples)):
                 if (examples[ex][best_index] == x):
                     matching_examples.append(examples[ex])
-            print("best is: ")
-            print(best)
-            print("attribute names are: ")
-            print(attribute_names)
             new_attributes = []
             if best in attribute_names:
                 new_attributes = attribute_names.remove(best)
             else:
                 new_attributes = attribute_names
-            print("new attributes are ")
-            print(new_attributes)
-            print(best)
+
+                print("***************FAILURE &***************8")
+                print(str(best))
+                print(str(self.attribute_idxs))
+                print(str(self.attribute_idxs[best]))
+                print(attribute_names)
+                print(self.attribute_names)
+                print(new_attributes)
+
             subtree = self.DTL(examples, new_attributes, self.mode(matching_examples))
             tree.branches[x] = subtree
 
@@ -200,7 +201,19 @@ class DecisionTree:
         # WRITE the required CODE HERE and return the computed values
         # prediction should be a simple matter of recursively routing
         # a sample starting at the root node
-        return None
+        print("start of the prediction")
+        print(X)
+        predictions = np.zeros(len(X))
+        print("root information")
+
+        print(self.root.att_idx)
+        print(self.root.att_values)
+        print(self.root.branches)
+
+        for x in range(len(X)):
+            print(X[x])
+            predictions[x] = self.root.route(X[x])
+        return predictions
 
     def print(self):
         """
@@ -216,6 +229,9 @@ class DecisionTree:
         if len(node.branches) < 1:
             print('\t\tanswer',node.answer)
         else:
+            print(node.att_idx)
+            print(self.attribute_idxs)
+            print(self.attribute_names)
             att_name = self.attribute_names[node.att_idx]
             for value, branch in node.branches.items():
                 print('att_name',att_name,'\tbranch_value',value)
@@ -231,6 +247,5 @@ if __name__ == '__main__':
     model = DecisionTree()
     model.fit(examples, attribute_names, attribute_values)
     y = model.predict(examples)
-    print()
-    print(model.root)
     print(y)
+    model.print()
