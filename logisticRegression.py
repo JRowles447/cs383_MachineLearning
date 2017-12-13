@@ -94,15 +94,19 @@ class LogisticRegression:
         :param Y: target, shape:(N,)
         :return: scalar loss value
         """
-        N = y[0]
+        N = len(y)
         loss = 0
 
         # calculate the loss
         for x in range(X.shape[0]):
-            z = np.dot(w, X[x,].T)
+            z = np.dot(w, X[x,])
             sigmoid = (1)/(1+ np.e**(-z))
-            # print(sigmoid)
-            loss += (-y[x]*np.log10(sigmoid) - (1-y[x])*np.log10(1-sigmoid))
+            print("Loss is " + str(loss) + " " + str(y[x]) + " from " + str(X[x,]) + " with z: " + str(z) + " sigmoid " + str(sigmoid))
+
+            more_loss = -y[x]*np.log(sigmoid) - (1-y[x])*np.log(1-sigmoid)
+            if(more_loss < 0):
+                more_loss = more_loss*-1
+            loss += more_loss
 
         loss = loss/N
         print(loss)
@@ -118,15 +122,11 @@ class LogisticRegression:
         :return: vector of size (3,) containing gradients for each weight
         """
         # WRITE the required CODE HERE and return the computed values
-
-        gradient = 0
-
         Z = np.dot(w, X.T)
 
         sigmoid = 1/(1+np.power((np.e),-Z))
         diff = sigmoid - y
         res = np.dot(diff.T, X)
-        # print(res)
         return res
 
 
