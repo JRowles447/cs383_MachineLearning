@@ -101,7 +101,7 @@ class LogisticRegression:
         for x in range(X.shape[0]):
             z = np.dot(w, X[x,])
             sigmoid = (1)/(1+ np.e**(-z))
-            print("Loss is " + str(loss) + " " + str(y[x]) + " from " + str(X[x,]) + " with z: " + str(z) + " sigmoid " + str(sigmoid))
+            # print("Loss is " + str(loss) + " " + str(y[x]) + " from " + str(X[x,]) + " with z: " + str(z) + " sigmoid " + str(sigmoid))
 
             more_loss = -y[x]*np.log(sigmoid) - (1-y[x])*np.log(1-sigmoid)
             if(more_loss < 0):

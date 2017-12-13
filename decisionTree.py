@@ -30,6 +30,11 @@ class Node(object):
         self.answer = answer
 
     def route(self, sample):
+        print("att_idx "  + str(self.att_idx))
+        print("att_values "  + str(self.att_values))
+        print("att_branches "  + str(self.branches))
+        print("att_answer "  + str(self.answer))
+
         if len(self.branches) < 1:
             return self.answer
         att = sample[self.att_idx]
@@ -71,7 +76,8 @@ class DecisionTree:
         num_true = 0
         num_false = 0
         for x in examples:
-            if(x[10]):
+            # print(x)
+            if(x[0]):
                 num_true += 1
             else:
                 num_false += 1
@@ -85,7 +91,7 @@ class DecisionTree:
         # Case 4
         best = self.chooseAttribute(attribute_names, examples)
         best_index = self.attribute_idxs[best]
-        tree = Node(best_index, self.attribute_map[best])
+        tree = Node(att_idx = best_index, att_values=self.attribute_map[best])
         self.root = tree
         # tree = DecisionTree()
         # tree.root = best
@@ -94,22 +100,27 @@ class DecisionTree:
             for ex in range(len(examples)):
                 if (examples[ex][best_index] == x):
                     matching_examples.append(examples[ex])
-            new_attributes = []
-            if best in attribute_names:
-                new_attributes = attribute_names.remove(best)
-            else:
-                new_attributes = attribute_names
+            new_attributes = attribute_names
+            if best in new_attributes:
+                print("old attributes " + str(new_attributes))
+                new_attributes.remove(best)
+                print("new attributes " + str(new_attributes))
 
-                print("***************FAILURE &***************8")
-                print(str(best))
-                print(str(self.attribute_idxs))
-                print(str(self.attribute_idxs[best]))
-                print(attribute_names)
-                print(self.attribute_names)
-                print(new_attributes)
+            # else:
+            #     new_attributes = attribute_names
+
+                # print("***************FAILURE &***************8")
+                # print(str(best))
+                # print(str(self.attribute_idxs))
+                # print(str(self.attribute_idxs[best]))
+                # print(attribute_names)
+                # print(self.attribute_names)
+                # print(new_attributes)
 
             subtree = self.DTL(examples, new_attributes, self.mode(matching_examples))
             tree.branches[x] = subtree
+            print("adding branch " + str(subtree))
+            print(tree.branches)
 
         return tree
 
@@ -202,7 +213,7 @@ class DecisionTree:
         # prediction should be a simple matter of recursively routing
         # a sample starting at the root node
         print("start of the prediction")
-        print(X)
+        # print(X)
         predictions = np.zeros(len(X))
         print("root information")
 
@@ -211,7 +222,7 @@ class DecisionTree:
         print(self.root.branches)
 
         for x in range(len(X)):
-            print(X[x])
+            print("*****************\n Working on Example: \n " + str(X[x]) + "\n***********")
             predictions[x] = self.root.route(X[x])
         return predictions
 
@@ -226,16 +237,18 @@ class DecisionTree:
         Print the subtree given by node in a readable format.
         :param node: the root of the subtree to be printed
         """
+        print("*********************************************************** PRINGINT THE TREE ****************************8")
         if len(node.branches) < 1:
             print('\t\tanswer',node.answer)
         else:
             print(node.att_idx)
             print(self.attribute_idxs)
             print(self.attribute_names)
-            att_name = self.attribute_names[node.att_idx]
-            for value, branch in node.branches.items():
-                print('att_name',att_name,'\tbranch_value',value)
-                self.print_tree(branch)
+            if(len(attribute_names) != 0):
+                att_name = self.attribute_names[node.att_idx]
+                for value, branch in node.branches.items():
+                    print('att_name',att_name,'\tbranch_value',value)
+                    self.print_tree(branch)
 
 
 if __name__ == '__main__':
