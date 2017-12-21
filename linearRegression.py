@@ -64,7 +64,6 @@ class LinearRegression:
             # Remember: matrix inverse in NOT equal to matrix**(-1)
             # WRITE the required CODE HERE to update the weights using closed form solution
             self.w = third
-            print(third)
 
         else:
             raise ValueError('flag can only be either: ''GradientDescent'' or ''Analytic''')
