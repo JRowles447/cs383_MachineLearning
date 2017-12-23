@@ -14,7 +14,7 @@ Run Logistic Regression with the following command:
 `>python logisticRegression.py`   
 
 Sample Graph:
-
+![Alt text](images/logistic_regression.png)
 ### Running kmean
 Run kmeans with the following command:    
 `>python kmeans.py`   
