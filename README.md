@@ -12,14 +12,17 @@ Program approximates weight function through multiple iterations of gradient des
 ### Running Logistic Regression
 Run Logistic Regression with the following command:    
 `>python logisticRegression.py`   
+Program generates a decision boundary between the two sets of points, gray lines represent boundaries generated during earlier iterations. Program reports the loss.    
 
-Sample Graph:
-![Alt text](images/logistic_regression.png)
+Sample Graph:   
+![Alt text](images/logistic_regression.png)   
+
 ### Running kmean
 Run kmeans with the following command:    
 `>python kmeans.py`   
-Program iteratively assigns vertices to clusters (through euclidean distance), reassigns the centroid locations as the center of all the points in cluster assignment.
+Program iteratively assigns vertices to clusters (through euclidean distance), reassigns the centroid locations as the center of all the points in cluster assignment. Produces graphs with two, three, and five centroids.
 
-Sample Graph:
+Sample Graph:   
+![Alt text](images/kmeans_3.png)   
 
 ### Running Bayesian Learning
