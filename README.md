@@ -25,4 +25,18 @@ Program iteratively assigns vertices to clusters (through euclidean distance), r
 Sample Graph:   
 ![Alt text](images/kmeans_3.png)   
 
-### Running Bayesian Learning
+### Running Bayesian Learning   
+Run bayesian with the following command:    
+`>python bayesian.py`   
+Program generates graph with the probability of drawing a lime candy from a bag of unknown proportions of cherry and lime candies. Program operates on a list of draw. The index of the list is the draw number and the number stored in list is the number of limes drawn so far.
+
+Finite set of hypotheses are as follows:
+- Hypothesis 1: 0% chance of drawing lime candy. 
+- Hypothesis 2: 25% chance of drawing lime candy.
+- Hypothesis 3: 50% chance of drawing lime candy.
+- Hypothesis 4: 75% chance of drawing lime candy.
+- Hypothesis 5: 100% chance of drawing lime candy.
+
+Generates probability using MAP hypothesis, MLE hypothesis, and utilizing infinite hypotheses with bayesian learning. The probability of drawing a lime at time `t` given that `t-1` limes have been drawn are plotted on the following graph:
+
+![Alt text](images/probabilistic.png)

@@ -17,7 +17,7 @@ You are NOT allowed to import anything else.
 Following is a skeleton code which follows a Scikit style API.
 Make necessary changes, where required, to get it correctly running.
 
-Note: Running this empty template code might throw some error because 
+Note: Running this empty template code might throw some error because
 currently some return values are not as per the required API. You need to
 change them.
 
@@ -89,12 +89,9 @@ class Posterior:
         infinite = np.zeros(self.N)
         local_b = self.b
         for x in range(self.N):
-            # local_b += 1
             more_limes = ((gamma(self.a)*gamma(local_b + 1 + x))/gamma(self.a + local_b + 1 + x))
             more_cherries = ((gamma(self.a + 1)*gamma(local_b + x))/gamma(self.a + local_b + 1 + x))
             infinite[x] = more_limes/(more_cherries + more_limes)
-            print(infinite[x])
-            print(more_cherries/(more_limes + more_cherries))
         return infinite
 
 
